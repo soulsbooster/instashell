@@ -16,6 +16,7 @@ fi
 #echo "\033[0;31mHere need your sudo\033[0m\n" && sudo apt install checkinstall
 wget https://www.openssl.org/source/openssl-1.1.0g.tar.gz
 mkdir $HOME/temp && cd $HOME/temp && mv ../openssl-1.1.0g.tar.gz . && tar -xvf ./openssl-1.1.0g.tar.gz && cd ./openssl-1.1.0g && ./config && sudo make install
+rm -R -f $HOME/temp
 printf "\033[0;31mInstalling TOR\033[0m\n"
 sudo apt install tor
 printf "\033[0;31mInstalling Curl\033[0m\n"
