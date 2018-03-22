@@ -4,5 +4,5 @@ echo "\033[1m \033[0;32mHello there! I'm a script that will install all \033[0;3
 sudo apt install openssl
 #wget https://www.openssl.org/source/openssl-1.1.0g.tar.gz
 #tar xvf openssl-1.1.0g.tar.gz
-sudo apt install tor
-sudo apt install curl
+sudo apt install tor -y
+sudo apt install curl -y
