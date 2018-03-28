@@ -105,7 +105,7 @@ mkdir sessions
 fi
 printf "user=\"%s\"\npass=\"%s\"\nwl_pass=\"%s\"\ntoken=\"%s\"\n" $user $pass $wl_pass $token > sessions/store.session.$user.$(date +"%FT%H%M")
 printf "\e[1;77mСессия сохранена.\e[0m\n"
-printf "\e[1;92mИспользуйте ./instashell --resume\n"
+printf "\e[1;92mИспользуйте ./instashell --resume\n\033[0m"
 else
 exit 1
 fi
@@ -127,7 +127,7 @@ checktor
 count_pass=$(wc -l $wl_pass | cut -d " " -f1)
 printf "\e[1;92mИмя пользователя:\e[0m\e[1;77m %s\e[0m\n" $user
 printf "\e[1;92mСловарь:\e[0m\e[1;77m %s (%s)\e[0m\n" $wl_pass $count_pass
-printf "\e[1;91m[*] Нажмите \033[41m\033[0;30mCtrl + C\033[0m, чтобы остановить или сохранить сессию\n\e[0m"
+printf "\e[1;91m[*] Нажмите Ctrl + C, чтобы остановить или сохранить сессию\n\e[0m"
 token=0
 startline=1
 endline="$threads"
@@ -180,7 +180,7 @@ threads="${threads:-${default_threads}}"
 
 printf "\e[1;92m[*] Продолжаю сессию для:\e[0m \e[1;77m%s\e[0m\n" $user
 printf "\e[1;92m[*] Словарь: \e[0m \e[1;77m%s\e[0m\n" $wl_pass
-printf "\e[1;91m[*] Нажмите \033[41m\033[0;30mCtrl + C\033[0m, чтобы остановить или сохранить сессию\n\e[0m"
+printf "\e[1;91m[*] Нажмите Ctrl + C, чтобы остановить или сохранить сессию\n\e[0m"
 
 
 count_pass=$(wc -l $wl_pass | cut -d " " -f1)
