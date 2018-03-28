@@ -1,6 +1,6 @@
 # Instashell v1.5.2
 ## Creator: github.com/thelinuxchoice   
-## Co-author: github.com/XIshArkIX (Currently Translate Repository)
+## Co-author: github.com/XIshArkIX (Currently Translates the Repository)
 
 Instashell is an Shell Script to perform brute force attack against Instagram, this script can bypass login limiting on wrong passwords, so basically it can test infinite number of passwords.
 
