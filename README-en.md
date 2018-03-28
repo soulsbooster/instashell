@@ -10,8 +10,8 @@ Instashell is an Shell Script to perform brute force attack against Instagram, t
 ```bash
 git clone https://github.com/XIshArkIX/instashell
 cd instashell
-chmod +x installreq.sh
-sudo ./installreq.sh
+chmod +x install.sh
+sudo ./install.sh
 ```
 
 ### Usage:

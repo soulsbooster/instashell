@@ -10,8 +10,8 @@ Instashell - это скрипт для выполнения атаки брут
 ```bash
 git clone https://github.com/XIshArkIX/instashell
 cd instashell
-chmod +x installreq.sh
-sudo ./installreq.sh
+chmod +x install.sh
+sudo ./install.sh
 ```
 
 ### Использование:
