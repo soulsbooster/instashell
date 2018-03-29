@@ -172,10 +172,10 @@ source $list
 printf "\e[1;92m%s \e[0m\e[1;77m: %s (\e[0m\e[1;92mwl:\e[0m\e[1;77m %s\e[0m\e[1;92m,\e[0m\e[1;92m lastpass:\e[0m\e[1;77m %s )\n\e[0m" "$counter" "$list" "$wl_pass" "$pass"
 let counter++
 done
-read -p $'\e[1;92mChoose a session number: \e[0m' fileresume
+read -p $'\e[1;92mВыберите номер сессии: \e[0m' fileresume
 source $(ls sessions/store.session* | sed ''$fileresume'q;d')
 default_threads=10
-read -p $'\e[1;92mThreads (Use < 20, Default 10): \e[0m' threads
+read -p $'\033[41m\033[30mНЕСТАБИЛЬНО!!! Особенно при использовании ключа --resume\033[0m\n\e[1;92mПотоки (Используйте <20 или Enter, чтобы использовать 10): \e[0m' threads
 threads="${threads:-${default_threads}}"
 
 printf "\e[1;92m[*] Продолжаю сессию для:\e[0m \e[1;77m%s\e[0m\n" $user
