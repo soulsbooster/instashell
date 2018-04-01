@@ -1,4 +1,4 @@
-# Instashell v1.5.3
+# Instashell v1.5.4
 ## Создатель: github.com/thelinuxchoice
 ## Переводчик [RU]: github.com/XIshArkIX [готово]
 

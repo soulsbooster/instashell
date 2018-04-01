@@ -1,4 +1,4 @@
-# Instashell v1.5.3
+# Instashell v1.5.4
 ## Author: github.com/thelinuxchoice
 ## Translator [RU]: github.com/XIshArkIX [done]
 ## IG: instagram.com/thelinuxchoice
