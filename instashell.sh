@@ -57,7 +57,6 @@ banner() {
 
 function start() {
 banner
-checkroot
 dependencies
 read -p $'\e[1;92mИмя аккаунта: \e[0m' user
 checkaccount=$(curl -L -s https://www.instagram.com/$user/?__a=1 | grep -c "страница возможно удалена или не сущетсвует по каким-либо причинам")
